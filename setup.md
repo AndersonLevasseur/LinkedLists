@@ -6,8 +6,7 @@ The following commands upgrade your linux instance and add a new source for gett
         curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 Once that's complete, you can run the following to upgrade Node to 12
-<<<<<<< HEAD
-- sudo apt-get install -y nodejs 
+
 =======
         sudo apt-get install -y nodejs
 
