@@ -31,7 +31,7 @@ class LinkedList {
     } else {
       throw "Nothing to Remove";
     }
-    this.#size--
+    this.#size--;
     return selectedNode;
   }
 
@@ -53,39 +53,58 @@ class LinkedList {
   insertAt(element, location) {
     // count from #head
     // location = 'z'
-    let newNode = new Node(element); 
+    let newNode = new Node(element);
     let count = 0;
     let currentNode = this.#head;
     let previousNode;
-    while (count != location) {
+    while (count !== location) {
       if (count < location) {
         previousNode = currentNode;
         currentNode = currentNode.next;
         count++;
       } else {
-        throw "location not found"
+        throw "location not found";
       }
     }
-    // change previous link
     previousNode.next = element;
-    // set link
     newNode.next = currentNode;
-    // count goes up until it reaches location
-    // as going up cylce through elements
-    // breaks if you reach the end and count doesn't equal location
     this.#size++
   }
 
   // Removes the element at the point in the linked list defined by the zero 
   // indexed location parameter
   removeFrom(location) {
-    this.#size--
+    let count = 0;
+    let currentNode = this.#head;
+    let previousNode;
+    while (count !== location) {
+      if (count < location) {
+        previousNode = currentNode;
+        currentNode = currentNode.next;
+        count++;
+      } else {
+        throw "location not found";
+      }
+    }
+    previousNode.next = currentNode.next;
+    // delete currentNode 
+    this.#size--;
   }
 
   // Removes and returns the first element that matches the element parameter
   // If no element is found, throws exception
   removeElement(element) {
-    this.#size--
+    let currentNode = this.#head;
+    let previousNode;
+    while (currentNode.contents !== element) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+      if (currentNode.next === null) {
+        throw "element not found";
+      }
+    }
+    
+    this.#size--;
   }
 
   // Returns a comma and space separated list of values representing the contents of the
