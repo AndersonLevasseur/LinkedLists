@@ -25,50 +25,51 @@ class LinkedList {
   pop() {
     let selectedNode = this.#head;
     if (!!this.#head) {
-      // reassign this.haed
+      // reassign this.head
       this.#head = this.#head.next;
-      // remove it 
     } else {
       throw "Nothing to Remove";
     }
     this.#size--;
-    return selectedNode;
+    return selectedNode.contents;
   }
 
   // Returns the element at the head of the linked list without altering the list
   peek() {
-    let firstNode = this.#head;
     if (!!this.#head) {
-      return firstNode;
+      return this.#head.contents;
     } else {
       throw "Linked List Empty";
     }
-    // copy firstNode
-
-    // Return copy
   }
 
   // Adds an element to the point in the linked list defined by the zero 
   // indexed location parameter and returns nothing
   insertAt(element, location) {
     // count from #head
-    // location = 'z'
+    // TODO: test when location = 'z'
     let newNode = new Node(element);
     let count = 0;
     let currentNode = this.#head;
     let previousNode;
+
     while (count !== location) {
-      if (count < location) {
+      if (!!currentNode) {
         previousNode = currentNode;
         currentNode = currentNode.next;
         count++;
       } else {
-        throw "location not found";
+        throw "Location not Found";
       }
     }
-    previousNode.next = element;
-    newNode.next = currentNode;
-    this.#size++
+
+    if (count === 0) {
+      newNode.next = currentNode;
+    } else {
+      previousNode.next = newNode;
+      newNode.next = currentNode;
+    }
+    this.#size++;
   }
 
   // Removes the element at the point in the linked list defined by the zero 
@@ -77,34 +78,57 @@ class LinkedList {
     let count = 0;
     let currentNode = this.#head;
     let previousNode;
+    if (this.#head === null) {
+      throw "LinkedList Empty"
+    }
     while (count !== location) {
       if (count < location) {
         previousNode = currentNode;
         currentNode = currentNode.next;
         count++;
       } else {
-        throw "location not found";
+        throw "Location not Found";
       }
     }
-    previousNode.next = currentNode.next;
-    // delete currentNode 
+    if (count === 0) {
+      if (this.#head) {
+        this.#head = this.#head.next;
+      } else {
+        throw "Location not Found";
+      }
+    } else {
+      previousNode.next = currentNode.next;
+    }
     this.#size--;
   }
 
   // Removes and returns the first element that matches the element parameter
   // If no element is found, throws exception
   removeElement(element) {
+    let count = 0;
     let currentNode = this.#head;
     let previousNode;
+    let soughtElement;
+    if (this.#head === null) {
+      throw "LinkedList Empty"
+    }
     while (currentNode.contents !== element) {
+      if (currentNode.next === null) {
+        throw "Element not Found";
+      }
       previousNode = currentNode;
       currentNode = currentNode.next;
-      if (currentNode.next === null) {
-        throw "element not found";
-      }
+      count++
     }
-    
+    if (count === 0) {
+      this.#head = this.#head.next;
+      soughtElement = currentNode.contents;
+    } else {
+      soughtElement = currentNode.contents;
+      previousNode.next = currentNode.next;
+    }
     this.#size--;
+    return soughtElement;
   }
 
   // Returns a comma and space separated list of values representing the contents of the

@@ -41,6 +41,7 @@ describe("Linked List", () => {
         testList.push("second");
         testList.push("third");
         expect(testList.pop()).toBe("third");
+        // add a peek or tostring
     });
     it("will push after popping", () => {
         testList.push("test");
@@ -53,10 +54,70 @@ describe("Linked List", () => {
         testList.push(2);
         testList.push("yessir");
         testList.push(4);
-        testList.insertAt("third", 1);
+        testList.insertAt("third", 2);
         expect(testList.toString()).toBe("4, yessir, third, 2, test");
     });
-    it("will insertAt 1 while empty", () => {
+    it("will throw when insertAt 1 while empty", () => {
         expect(testList.insertAt("fail", 1)).toThrow("Location not Found");
     });
+    it("will push multiple things and removeFrom the first one", () => {
+        testList.push(93);
+        testList.push("0");
+        testList.push("seven");
+        testList.removeFrom(0);
+        expect(testList.toString()).toBe("0, 93");
+    });
+    it("will push one thing and removeFrom to remove it", () => {
+        testList.push(13);
+        testList.removeFrom(0);
+        expect(testList.toString()).toBe("");
+    })
+    it("will push nothing and when trying to removeFrom it will throw", () => {
+        expect(testList.removeFrom(0)).toThrow("Location not Found");
+    });
+    it("will push then removeFrom the last item", () => {
+        testList.push(59);
+        testList.push(5);
+        testList.push(9);
+        testList.removeFrom(2);
+        expect(testList.toString()).toBe("9, 5");
+    });
+    it("will push and removeFrom will throw when NAN", () => {
+        testList.push(64);
+        testList.push(59);
+        testList.push(5);
+        expect(testList.removeFrom("z")).toThrow("Location not Found");
+    });
+    it("will push and removeElement from beginning", () => {
+        testList.push("f");
+        testList.push(9);
+        testList.push(8);
+        testList.removeElement(8);
+        expect(testList.toString()).toBe("9, f");
+    });
+    it("will throw when empty and trying to removeElement", () => {
+        expect(testList.removeElement(9)).toThrow("LinkedList Empty");
+    });
+    it("will throw when element entered in removeElement is not in list", () => {
+        testList.push("e");
+        testList.push(9);
+        testList.push("8");
+        expect(testList.removeElement(8)).toThrow("Element not Found");
+    });
+    it("will push and removeElement from end", () => {
+        testList.push("e");
+        testList.push(9);
+        testList.push("8");
+        testList.removeElement("e");
+        expect(testList.toString()).toBe("8, 9");
+    });
+    it("will push and removeElement from middle", () => {
+        testList.push(13);
+        testList.push("e");
+        testList.push(9);
+        testList.push("whoops")
+        testList.push("8");
+        testList.removeElement("whoops");
+        expect(testList.toString()).toBe("8, 9, e, 13");
+    })
 });
