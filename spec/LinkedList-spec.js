@@ -23,7 +23,7 @@ describe("Linked List", () => {
         expect(testList.toString()).toBe("2384, 4, test");
     });
     it("will throw when peeking while empty", () => {
-        expect(testList.peek()).toThrow("Linked List Empty");
+        expect(testList.peek()).toThrowError("Linked List Empty");
     });
     it("will push multiple things and toString will return data in a string", () => {
         testList.push(43);
@@ -58,7 +58,7 @@ describe("Linked List", () => {
         expect(testList.toString()).toBe("4, yessir, third, 2, test");
     });
     it("will throw when insertAt 1 while empty", () => {
-        expect(testList.insertAt("fail", 1)).toThrow("Location not Found");
+        expect(testList.insertAt("fail", 1)).toThrowError("Location not Found");
     });
     it("will push multiple things and removeFrom the first one", () => {
         testList.push(93);

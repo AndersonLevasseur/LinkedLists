@@ -39,7 +39,7 @@ class LinkedList {
     if (!!this.#head) {
       return this.#head.contents;
     } else {
-      throw "Linked List Empty";
+      throw new Object("Linked List Empty");
     }
   }
 
@@ -48,6 +48,8 @@ class LinkedList {
   insertAt(element, location) {
     // count from #head
     // TODO: test when location = 'z'
+    // TODO: add validation
+    
     let newNode = new Node(element);
     let count = 0;
     let currentNode = this.#head;
@@ -75,6 +77,7 @@ class LinkedList {
   // Removes the element at the point in the linked list defined by the zero 
   // indexed location parameter
   removeFrom(location) {
+    // TODO: add validation
     let count = 0;
     let currentNode = this.#head;
     let previousNode;
@@ -145,9 +148,7 @@ class LinkedList {
       } else {
         results = results.concat(currentNode.contents + ", ");
       }
-      // append them to results
       currentNode = currentNode.next;
-      // go to next Node
     }
     return results;
   }
