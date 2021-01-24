@@ -12,7 +12,6 @@ function binarySearch(list, value) {
         result += middle;
     } else if (list.length <= 1) {
         return "object not found"
-        // really needs to return location of middle
     } else if (value > list[middle]) {
         result += middle + 1;
         result += binarySearch(list.splice(middle + 1, max), value);
