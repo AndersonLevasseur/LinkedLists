@@ -1,11 +1,11 @@
 const Node = require('./Node.js');
-class LinkedList {
+module.exports = class LinkedList {
   #head;
-  #size;
-
+  #tail;
   constructor() {
     this.#head = null;
-    this.#size = 0;
+    this.length = 0;
+    this.#tail = null;
   }
 
   // Adds an element to the head of the linked list and returns nothing
@@ -13,12 +13,16 @@ class LinkedList {
     // element is the contents of the node
     let newNode = new Node(element);
     // link is the next node, but if there isn't one it needs to be null
+    if (this.length === 0) {
+      this.#tail = newNode;
+    }
+
     if (this.#head) {
       newNode.next = this.#head;
     }
 
     this.#head = newNode;
-    this.#size++;
+    this.length++;
   }
 
   // Removes and returns the element at the head of the linked list
@@ -30,7 +34,10 @@ class LinkedList {
     } else {
       throw "Nothing to Remove";
     }
-    this.#size--;
+    this.length--;
+    if (this.length === 0) {
+      this.#tail = null;
+    }
     return selectedNode.contents;
   }
 
@@ -43,35 +50,44 @@ class LinkedList {
     }
   }
 
+  addToEnd(element) {
+    let newNode = new Node(element);
+    if (this.length === 0) {
+      this.push(element);
+    } else {
+      this.#tail.next = newNode;
+      this.#tail = newNode;
+    }
+  }
   // Adds an element to the point in the linked list defined by the zero 
   // indexed location parameter and returns nothing
   insertAt(element, location) {
     // count from #head
     // TODO: test when location = 'z'
     // TODO: add validation
-    
+
     let newNode = new Node(element);
     let count = 0;
     let currentNode = this.#head;
     let previousNode;
-
-    while (count !== location) {
-      if (!!currentNode) {
-        previousNode = currentNode;
-        currentNode = currentNode.next;
-        count++;
-      } else {
-        throw "Location not Found";
-      }
-    }
-
-    if (count === 0) {
-      newNode.next = currentNode;
+    if (location === 0) {
+      this.push(element);
+    } else if (location === this.length) {
+      this.addToEnd(element);
     } else {
+      while (count !== location) {
+        if (!!currentNode) {
+          previousNode = currentNode;
+          currentNode = currentNode.next;
+          count++;
+        } else {
+          throw "Location not Found";
+        }
+      }
       previousNode.next = newNode;
       newNode.next = currentNode;
     }
-    this.#size++;
+    this.length++;
   }
 
   // Removes the element at the point in the linked list defined by the zero 
@@ -102,7 +118,7 @@ class LinkedList {
     } else {
       previousNode.next = currentNode.next;
     }
-    this.#size--;
+    this.length--;
   }
 
   // Removes and returns the first element that matches the element parameter
@@ -130,7 +146,7 @@ class LinkedList {
       soughtElement = currentNode.contents;
       previousNode.next = currentNode.next;
     }
-    this.#size--;
+    this.length--;
     return soughtElement;
   }
 
@@ -153,4 +169,3 @@ class LinkedList {
     return results;
   }
 }
-module.exports = LinkedList;
